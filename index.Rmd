@@ -1,0 +1,31 @@
+---
+title: "index"
+author: "VatsalRajput"
+date: "2024-03-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+library(animint2)
+
+# Read data from meta.csv (replace with actual file if different)
+gallery_data <- read.csv("meta.csv")
+
+# Loop through each animint entry
+for (i in 1:nrow(gallery_data)) {
+  row <- gallery_data[i, ]
+  
+  # Access data from each row (replace with actual column names if different)
+  animint_link <- row$link
+  animint_title <- row$title
+  screenshot <- row$screenshot
+  
+  # Create a card or tile for each animint
+  # (Replace with your desired HTML structure for the card)
+  cat("  * [", animint_title, "](", animint_link, ")", sep = "")
+  if (nrow(gallery_data) != i) cat("<br>")  # Add line break except for last entry
+}
+
