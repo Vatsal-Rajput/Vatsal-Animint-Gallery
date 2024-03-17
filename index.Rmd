@@ -1,31 +1,40 @@
 ---
-title: "index"
+title: "Vatsal-Animint-Gallery"
 author: "VatsalRajput"
 date: "2024-03-07"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+```{r, echo=FALSE}
+library(data.table)
+library(kableExtra)
 
-library(animint2)
+dt <- read.csv('meta.csv')
 
-# Read data from meta.csv (replace with actual file if different)
-gallery_data <- read.csv("meta.csv")
-
-# Loop through each animint entry
-for (i in 1:nrow(gallery_data)) {
-  row <- gallery_data[i, ]
-  
-  # Access data from each row (replace with actual column names if different)
-  animint_link <- row$link
-  animint_title <- row$title
-  screenshot <- row$screenshot
-  
-  # Create a card or tile for each animint
-  # (Replace with your desired HTML structure for the card)
-  cat("  * [", animint_title, "](", animint_link, ")", sep = "")
-  if (nrow(gallery_data) != i) cat("<br>")  # Add line break except for last entry
+no_of_ani <- dim(dt)[1]
+image_links <- numeric(no_of_ani)
+for(i in 1:dim(dt)[1]){
+  image_links[i] <- sprintf("%s%s%s","https://raw.githubusercontent.com/",dt$viz_owner_repo[i],"/gh-pages/Capture.png")
 }
+
+image_df <- data.frame(Image="")
+
+Source <- paste0("<a href=", dt$source, ">", dt$title, "</a>")
+
+gh_page_repo_link <- sprintf("%s%s%s","https://github.com/",dt$viz_owner_repo,"/tree/gh-pages")
+gh_page_repo <- paste0("<a href=", gh_page_repo_link, ">", dt$commit.POSIXct, "</a>")
+
+Creator <- strsplit(dt$viz_owner_repo,split="/")
+Creator <- Creator[[1]][1]
+
+full_data <- cbind(image_df, dt,Source,gh_page_repo,Creator)
+full_data <- full_data[,c(1,7,8,9)]
+
+#Creating table
+kable(full_data, format = "html",escape=FALSE) %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1, image = image_links)
+```
+# Visualisation with missing Meta-Data
+
 
