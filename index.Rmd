@@ -35,6 +35,9 @@ kable(full_data, format = "html",escape=FALSE) %>%
   kable_styling(full_width = FALSE) %>%
   column_spec(1, image = image_links)
 ```
+[Download the above table](meta.csv)
+
 # Visualisation with missing Meta-Data
 
-
+# Source Code
+* [Repository of this gallery](https://github.com/Vatsal-Rajput/Vatsal-Animint-Gallery)
